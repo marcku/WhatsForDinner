@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-//THOME TEST
-//rysep2 test
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -14,8 +14,12 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
 
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
+        ImageLoader.getInstance().init(config);
+
+        new RecipeHandler(this).loadRecipes("Pizza");
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
