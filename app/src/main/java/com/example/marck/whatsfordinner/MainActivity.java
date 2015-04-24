@@ -36,7 +36,7 @@ public class MainActivity extends ActionBarActivity {
         menu.add(0, MENU_FAVOURITES, 0, "Favourites");
         menu.add(0, MENU_BLACKLIST, 0, "Blacklist");
         menu.add(0, MENU_SETTINGS, 0, "Settings");
-        menu.add(0, MENU_QUIT, 0, "Quit");
+        menu.add(0, MENU_QUIT, 0, "Quitt");
         return true;
     }
 
