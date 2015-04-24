@@ -1,5 +1,6 @@
 package com.example.marck.whatsfordinner;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -58,7 +59,8 @@ public class MainActivity extends ActionBarActivity {
                 Toast.makeText(MainActivity.this, "Les favorites", Toast.LENGTH_LONG).show();
                 return true;
             case MENU_BLACKLIST:
-                Toast.makeText(MainActivity.this, "Blacklist", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(MainActivity.this, BlackListActivity.class);
+                startActivity(intent);
                 return true;
             case MENU_SETTINGS:
                 Toast.makeText(MainActivity.this, "Settings", Toast.LENGTH_LONG).show();
