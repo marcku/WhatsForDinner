@@ -1,19 +1,36 @@
 package com.example.marck.whatsfordinner;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+public class BlackListActivity extends ListActivity {
 
-public class BlackListActivity extends ActionBarActivity {
+    BlackListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_black_list);
-    }
+/*        super.onCreate(savedInstanceState);
+        setContentView(R.layout.blacklistitem);*/
 
+
+        final int numRows = 64;
+        super.onCreate(savedInstanceState);
+        Recipe[] rowData = new Recipe[numRows];
+
+        // initialize the array with some data (for demo and debugging purposes
+        // only)
+        for (int i = 0; i < numRows; i++) {
+            rowData[i] = new Recipe("Item " + String.valueOf(i + 1), "lel", "lel");
+        }
+
+        // construct and register the adapter
+        adapter = new BlackListAdapter(this, rowData);
+        setListAdapter(adapter);
+
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

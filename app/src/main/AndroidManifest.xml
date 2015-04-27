@@ -24,6 +24,10 @@
             android:name=".BlackListActivity"
             android:label="@string/title_activity_black_list" >
         </activity>
+        <activity
+            android:name=".FavouritesActivity"
+            android:label="@string/title_activity_favourites" >
+        </activity>
     </application>
 
 </manifest>

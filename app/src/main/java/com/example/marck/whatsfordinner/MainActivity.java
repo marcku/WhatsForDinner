@@ -36,7 +36,7 @@ public class MainActivity extends ActionBarActivity {
         menu.add(0, MENU_FAVOURITES, 0, "Favourites");
         menu.add(0, MENU_BLACKLIST, 0, "Blacklist");
         menu.add(0, MENU_SETTINGS, 0, "Settings");
-        menu.add(0, MENU_QUIT, 0, "Quitt");
+        menu.add(0, MENU_QUIT, 0, "Quit");
         return true;
     }
 
@@ -56,14 +56,15 @@ public class MainActivity extends ActionBarActivity {
 
         switch (item.getItemId()) {
             case MENU_FAVOURITES:
-                Toast.makeText(MainActivity.this, "Les favorites", Toast.LENGTH_LONG).show();
+                Intent favouritesIntent = new Intent(MainActivity.this, BlackListActivity.class);
+                startActivity(favouritesIntent);
                 return true;
             case MENU_BLACKLIST:
-                Intent intent = new Intent(MainActivity.this, BlackListActivity.class);
-                startActivity(intent);
+                Intent blackListIntent = new Intent(MainActivity.this, BlackListActivity.class);
+                startActivity(blackListIntent);
                 return true;
             case MENU_SETTINGS:
-                Toast.makeText(MainActivity.this, "Settings", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "Les settings", Toast.LENGTH_LONG).show();
                 return true;
             case MENU_QUIT:
                 quit();
