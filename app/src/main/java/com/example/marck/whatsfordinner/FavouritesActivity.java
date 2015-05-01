@@ -12,9 +12,6 @@ public class FavouritesActivity extends ListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-/*        super.onCreate(savedInstanceState);
-        setContentView(R.layout.blacklistitem);*/
-
 
         final int numRows = 64;
         super.onCreate(savedInstanceState);
