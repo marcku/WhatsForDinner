@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.example.marck.whatsfordinner.model.Recipe;
+
 import java.util.ArrayList;
 
 public class FavouritesAdapter extends ArrayAdapter<Recipe> {
