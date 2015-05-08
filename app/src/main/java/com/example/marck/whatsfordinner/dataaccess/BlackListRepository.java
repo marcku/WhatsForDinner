@@ -24,10 +24,11 @@ public class BlackListRepository {
                 "," + blItem.getExpiration() + ")");
     }
 
-    public List<BlacklistItem> getBlacklistEntries() {
+    public BlacklistItem[] getBlacklistEntries() {
         Cursor c = da.DropRawSqlQuery("SELECT * FROM Blacklist");
 
-        List<BlacklistItem> blList = null;
+//        List<BlacklistItem> blList = null;
+        BlacklistItem[] blackListArray = null;
 
         int Column1 = c.getColumnIndex("link");
         int Column2 = c.getColumnIndex("expiration");
@@ -37,13 +38,21 @@ public class BlackListRepository {
         if (c != null) {
             // Loop through all Results
 
-            do {
+            for (int i = 0; c.moveToNext(); i++){
+                BlacklistItem blitem = new BlacklistItem(
+                        c.getString(Column1),
+                        c.getLong(Column2));
+                blackListArray[i] = blitem;
+            }
+
+
+/*            do {
                 BlacklistItem blitem = new BlacklistItem(
                         c.getString(Column1),
                         c.getLong(Column2));
                 blList.add(blitem);
-            } while (c.moveToNext());
+            } while (c.moveToNext());*/
         }
-        return blList;
+        return blackListArray;
     }
 }

@@ -5,32 +5,28 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.marck.whatsfordinner.model.Recipe;
+import com.example.marck.whatsfordinner.dataaccess.BlackListRepository;
+import com.example.marck.whatsfordinner.model.BlacklistItem;
 
 public class BlackListActivity extends ListActivity {
 
     BlackListAdapter adapter;
+    BlackListRepository repository = new BlackListRepository();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 /*        super.onCreate(savedInstanceState);
         setContentView(R.layout.blacklistitem);*/
 
+        BlacklistItem item = new BlacklistItem("lel", 12345L);
+        repository.saveBlackListEntry(item);
 
-        final int numRows = 64;
         super.onCreate(savedInstanceState);
-        Recipe[] rowData = new Recipe[numRows];
-
-        // initialize the array with some data (for demo and debugging purposes
-        // only)
-        for (int i = 0; i < numRows; i++) {
-            rowData[i] = new Recipe("Item " + String.valueOf(i + 1), "lel", "lel");
-        }
+        BlacklistItem[] rowData = repository.getBlacklistEntries();
 
         // construct and register the adapter
         adapter = new BlackListAdapter(this, rowData);
         setListAdapter(adapter);
-
 
     }
 

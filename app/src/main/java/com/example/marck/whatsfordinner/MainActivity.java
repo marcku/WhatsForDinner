@@ -56,7 +56,7 @@ public class MainActivity extends ActionBarActivity {
 
         switch (item.getItemId()) {
             case MENU_FAVOURITES:
-                Intent favouritesIntent = new Intent(MainActivity.this, BlackListActivity.class);
+                Intent favouritesIntent = new Intent(MainActivity.this, FavouritesActivity.class);
                 startActivity(favouritesIntent);
                 return true;
             case MENU_BLACKLIST:

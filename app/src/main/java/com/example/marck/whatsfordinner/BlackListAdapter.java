@@ -7,21 +7,21 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.marck.whatsfordinner.model.Recipe;
+import com.example.marck.whatsfordinner.model.BlacklistItem;
 
 import java.util.ArrayList;
 
-public class BlackListAdapter extends ArrayAdapter<Recipe> {
+public class BlackListAdapter extends ArrayAdapter<BlacklistItem> {
     private ArrayList<Boolean> status = new ArrayList<>();
     private final Context context;
-    private final Recipe[] rowData;
+    private final BlacklistItem[] rowData;
 
     /*
      * Adapter to fetch the strings and images for each row Make sure you store
      * any per-item state in this adapter, not in the Views which may be
      * recycled upon scrolling
      */
-    public BlackListAdapter(Context context, Recipe[] rowData) {
+    public BlackListAdapter(Context context, BlacklistItem[] rowData) {
         super(context, R.layout.listitem, rowData);
         this.context = context;
         this.rowData = rowData;
@@ -66,7 +66,7 @@ public class BlackListAdapter extends ArrayAdapter<Recipe> {
             TextView textView = (TextView) rowView.findViewById(R.id.title);
 
             if (textView != null) {
-                textView.setText(rowData[position].getTitle());
+                textView.setText(rowData[position].getLink());
             }
 
         }
