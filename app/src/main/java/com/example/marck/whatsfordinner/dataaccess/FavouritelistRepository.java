@@ -2,10 +2,7 @@ package com.example.marck.whatsfordinner.dataaccess;
 
 import android.database.Cursor;
 
-import com.example.marck.whatsfordinner.model.BlacklistItem;
 import com.example.marck.whatsfordinner.model.FavouritelistItem;
-
-import java.util.List;
 
 /**
  * Created by jt on 06.05.2015.
@@ -26,24 +23,34 @@ public class FavouritelistRepository {
                 " VALUES ( "+ fItem.getLink() + ")");
     }
 
-    public List<FavouritelistItem> getFavouritelistEntries() {
+    public FavouritelistItem[] getFavouritelistEntries() {
         Cursor c = da.DropRawSqlQuery("SELECT * FROM Favouritelist");
 
-        List<FavouritelistItem> fList = null;
+        FavouritelistItem[] favArray = null;
 
-        int Column1 = c.getColumnIndex("link");
+        int Column1 = c.getColumnIndex("title");
+        int Column2 = c.getColumnIndex("imageSrc");
+        int Column3 = c.getColumnIndex("link");
 
         // Check if our result was valid.
         c.moveToFirst();
         if (c != null) {
             // Loop through all Results
 
-            do {
+            for (int i = 0; c.moveToNext(); i++){
+                FavouritelistItem favItem = new FavouritelistItem(
+                        c.getString(Column1),
+                        c.getString(Column2),
+                        c.getString(Column3));
+                favArray[i] = favItem;
+            }
+
+/*            do {
                 FavouritelistItem fItem = new FavouritelistItem(
                         c.getString(Column1));
                 fList.add(fItem);
-            } while (c.moveToNext());
+            } while (c.moveToNext());*/
         }
-        return fList;
+        return favArray;
     }
 }

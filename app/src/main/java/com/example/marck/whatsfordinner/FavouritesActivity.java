@@ -1,12 +1,14 @@
 package com.example.marck.whatsfordinner;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
 
 import com.example.marck.whatsfordinner.model.Recipe;
-
 
 public class FavouritesActivity extends ListActivity {
 
@@ -52,6 +54,16 @@ public class FavouritesActivity extends ListActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+
+        super.onListItemClick(l, v, position, id);
+
+        Intent detailsIntent = new Intent(FavouritesActivity.this, DetailsActivity.class);
+        startActivity(detailsIntent);
+
     }
 
 }
