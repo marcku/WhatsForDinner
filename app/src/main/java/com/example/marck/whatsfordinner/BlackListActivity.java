@@ -18,7 +18,7 @@ public class BlackListActivity extends ListActivity {
 /*        super.onCreate(savedInstanceState);
         setContentView(R.layout.blacklistitem);*/
 
-        BlacklistItem item = new BlacklistItem("lel", 12345L);
+        BlacklistItem item = new BlacklistItem("title", "imageSrc", "link", 12345L);
         repository.saveBlackListEntry(item);
 
         super.onCreate(savedInstanceState);

@@ -6,7 +6,6 @@ package com.example.marck.whatsfordinner.model;
 public class FavouritelistItem {
 
     private String link;
-    private Long expiration;
 
     public FavouritelistItem(String link) {
         this.link = link;

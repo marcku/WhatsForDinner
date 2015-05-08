@@ -30,8 +30,10 @@ public class BlackListRepository {
 //        List<BlacklistItem> blList = null;
         BlacklistItem[] blackListArray = null;
 
-        int Column1 = c.getColumnIndex("link");
-        int Column2 = c.getColumnIndex("expiration");
+        int Column1 = c.getColumnIndex("title");
+        int Column2 = c.getColumnIndex("imageSrc");
+        int Column3 = c.getColumnIndex("link");
+        int Column4 = c.getColumnIndex("expiration");
 
         // Check if our result was valid.
         c.moveToFirst();
@@ -41,7 +43,9 @@ public class BlackListRepository {
             for (int i = 0; c.moveToNext(); i++){
                 BlacklistItem blitem = new BlacklistItem(
                         c.getString(Column1),
-                        c.getLong(Column2));
+                        c.getString(Column2),
+                        c.getString(Column3),
+                        c.getLong(Column4));
                 blackListArray[i] = blitem;
             }
 
