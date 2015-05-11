@@ -23,6 +23,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 
 /**
  * Created by marck on 17.03.15.
@@ -30,6 +32,7 @@ import java.util.Iterator;
 public class RecipeHandler {
     private Activity mHostActivity;
     private DisplayImageOptions options;
+    private ArrayList<Tag> taglist = new ArrayList<>();
 
     public RecipeHandler(Activity mHostActivity) {
         this.mHostActivity = mHostActivity;
@@ -44,7 +47,64 @@ public class RecipeHandler {
     }
 
     public void loadRecipes(String searchString) {
+        new GetTags().execute();
         new DownloadRecipe().execute(searchString);
+    }
+
+    private class GetTags extends AsyncTask<String, Void, String> {
+        String TAG = "GetTags";
+
+        @Override
+        protected String doInBackground(String... params) {
+            String getURL = "http://mobile.chefkoch.de/mobile/mobile-topsearches.php";
+
+            HttpClient client = new DefaultHttpClient();
+            HttpGet httpGet = new HttpGet(getURL);
+            String content = null;
+
+            try {
+                HttpResponse response = client.execute(httpGet);
+                if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+                    InputStream resp = response.getEntity().getContent();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(resp));
+                    StringBuilder out = new StringBuilder();
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        out.append(line);
+                    }
+                    content = out.toString();   //Prints the string content read from input stream
+                    reader.close();
+
+                    extractTags(content);
+                } else {
+                    Log.d(TAG, "HTTP Status Code was not 200 / OK");
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "Error loading " + getURL, e);
+            }
+
+            return content;
+        }
+
+        private void extractTags(String html) {
+            Document doc = Jsoup.parse(html);
+            Elements ulList = doc.select("ul.linklist.arrowlist li");
+
+            Iterator<Element> elementIterator = ulList.iterator();
+            Element currentElement;
+            Tag tag;
+
+            while(elementIterator.hasNext()) {
+                currentElement = elementIterator.next();
+                String text = currentElement.text();
+                String link = currentElement.getElementsByTag("a").attr("href");
+                link = link.replace("s0", "s0i1");
+                Log.d(TAG, text);
+                Log.d(TAG, link);
+                tag = new Tag(text, link);
+                taglist.add(tag);
+            }
+        }
     }
 
     private class DownloadRecipe extends AsyncTask<String, Void, String> {
@@ -55,7 +115,12 @@ public class RecipeHandler {
 
         @Override
         protected String doInBackground(String... params) {
-            String getURL = "http://mobile.chefkoch.de/ms/s0/"+ params[0] +"/Rezepte.html";
+            int randomNumber = randInt(0, taglist.size());
+
+            String getURL = "http://mobile.chefkoch.de" + taglist.get(randomNumber).getLink();
+
+            Log.d(TAG, "Tag Name: " + taglist.get(randomNumber).getName());
+            Log.d(TAG, "GetURL: " + getURL);
 
             HttpClient client = new DefaultHttpClient();
             HttpGet httpGet = new HttpGet(getURL);
@@ -103,22 +168,11 @@ public class RecipeHandler {
             } else {
                 // optionally handle the unsuccessful query
             }
-            //TextView txt = (TextView) findViewById(R.id.output);
-            //txt.setText("Executed"); // txt.setText(result);
-            // might want to change "executed" for the returned string passed
-            // into onPostExecute() but that is upto you
         }
-
-        @Override
-        protected void onPreExecute() {}
-
-        @Override
-        protected void onProgressUpdate(Void... values) {}
 
         private void extractRecipes(String html) {
             Document doc = Jsoup.parse(html);
             Elements ulList = doc.select("li.recipelist-item");
-            String content = ulList.text();
 
             Iterator<Element> elementIterator = ulList.iterator();
             Element currentElement;
@@ -139,5 +193,17 @@ public class RecipeHandler {
                 Log.d(TAG, "Element content: " + text);
             }
         }
+    }
+
+    public int randInt(int min, int max) {
+        // NOTE: Usually this should be a field rather than a method
+        // variable so that it is not re-seeded every call.
+        Random rand = new Random();
+
+        // nextInt is normally exclusive of the top value,
+        // so add 1 to make it inclusive
+        int randomNum = rand.nextInt((max - min) + 1) + min;
+
+        return randomNum;
     }
 }

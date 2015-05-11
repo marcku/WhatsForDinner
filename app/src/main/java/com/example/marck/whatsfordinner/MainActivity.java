@@ -25,7 +25,7 @@ public class MainActivity extends ActionBarActivity {
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
         ImageLoader.getInstance().init(config);
 
-        new RecipeHandler(this).loadRecipes("Pizza");
+        new RecipeHandler(this).loadRecipes("pizza");
     }
 
     @Override
@@ -36,7 +36,7 @@ public class MainActivity extends ActionBarActivity {
         menu.add(0, MENU_FAVOURITES, 0, "Favourites");
         menu.add(0, MENU_BLACKLIST, 0, "Blacklist");
         menu.add(0, MENU_SETTINGS, 0, "Settings");
-        menu.add(0, MENU_QUIT, 0, "Quitt");
+        menu.add(0, MENU_QUIT, 0, "Quit");
         return true;
     }
 
