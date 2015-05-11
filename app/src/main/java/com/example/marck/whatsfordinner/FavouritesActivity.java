@@ -8,28 +8,29 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
-import com.example.marck.whatsfordinner.dataaccess.BlackListRepository;
-import com.example.marck.whatsfordinner.model.BlacklistItem;
+import com.example.marck.whatsfordinner.model.Recipe;
 
-public class BlackListActivity extends ListActivity {
+public class FavouritesActivity extends ListActivity {
 
-    BlackListAdapter adapter;
-    BlackListRepository repository = new BlackListRepository();
+    FavouritesAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-/*        super.onCreate(savedInstanceState);
-        setContentView(R.layout.blacklistitem);*/
 
-        BlacklistItem item = new BlacklistItem("title", "imageSrc", "link", 12345L);
-        repository.saveBlackListEntry(item);
-
+        final int numRows = 64;
         super.onCreate(savedInstanceState);
-        BlacklistItem[] rowData = repository.getBlacklistEntries();
+        Recipe[] rowData = new Recipe[numRows];
+
+        // initialize the array with some data (for demo and debugging purposes
+        // only)
+        for (int i = 0; i < numRows; i++) {
+            rowData[i] = new Recipe("Item " + String.valueOf(i + 1), "lel", "lel");
+        }
 
         // construct and register the adapter
-        adapter = new BlackListAdapter(this, rowData);
+        adapter = new FavouritesAdapter(this, rowData);
         setListAdapter(adapter);
+
 
     }
 
@@ -60,7 +61,7 @@ public class BlackListActivity extends ListActivity {
 
         super.onListItemClick(l, v, position, id);
 
-        Intent detailsIntent = new Intent(BlackListActivity.this, DetailsActivity.class);
+        Intent detailsIntent = new Intent(FavouritesActivity.this, DetailsActivity.class);
         startActivity(detailsIntent);
 
     }

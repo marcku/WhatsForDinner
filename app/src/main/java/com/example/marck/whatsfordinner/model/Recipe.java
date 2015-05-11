@@ -1,4 +1,6 @@
-package com.example.marck.whatsfordinner;
+package com.example.marck.whatsfordinner.model;
+
+import java.sql.Date;
 
 /**
  * Created by marck on 21.03.15.

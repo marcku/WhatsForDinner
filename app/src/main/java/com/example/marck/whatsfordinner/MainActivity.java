@@ -56,14 +56,15 @@ public class MainActivity extends ActionBarActivity {
 
         switch (item.getItemId()) {
             case MENU_FAVOURITES:
-                Toast.makeText(MainActivity.this, "Les favorites", Toast.LENGTH_LONG).show();
+                Intent favouritesIntent = new Intent(MainActivity.this, FavouritesActivity.class);
+                startActivity(favouritesIntent);
                 return true;
             case MENU_BLACKLIST:
-                Intent intent = new Intent(MainActivity.this, BlackListActivity.class);
-                startActivity(intent);
+                Intent blackListIntent = new Intent(MainActivity.this, BlackListActivity.class);
+                startActivity(blackListIntent);
                 return true;
             case MENU_SETTINGS:
-                Toast.makeText(MainActivity.this, "Settings", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "Les settings", Toast.LENGTH_LONG).show();
                 return true;
             case MENU_QUIT:
                 quit();
