@@ -71,8 +71,6 @@ public class RecipeHandler {
     private void completedLoading() {
         completed++;
 
-        Log.d(LOGTAG, "completed: " + completed);
-
         if (completed == NUM_RECIEPS) {
             renderListView();
         }
@@ -161,37 +159,39 @@ public class RecipeHandler {
 
             String content = null;
 
-                int randomNumber = randInt(0, taglist.size());
-                String getURL = "http://mobile.chefkoch.de" + taglist.get(randomNumber).getLink();
+            int randomNumber = randInt(0, taglist.size()-1);
+            int randompPage = randInt(0, 30);
+            String getURL = "http://mobile.chefkoch.de" + taglist.get(randomNumber).getLink();
+            getURL = getURL.replace("s0i1", "s"+randompPage+"i1");
 
-                Log.d(TAG, "Tag Name: " + taglist.get(randomNumber).getName());
-                Log.d(TAG, "GetURL: " + getURL);
+            Log.d(TAG, "Tag Name: " + taglist.get(randomNumber).getName());
+            Log.d(TAG, "GetURL: " + getURL);
 
-                HttpClient client = new DefaultHttpClient();
-                HttpGet httpGet = new HttpGet(getURL);
+            HttpClient client = new DefaultHttpClient();
+            HttpGet httpGet = new HttpGet(getURL);
 
-                try {
-                    HttpResponse response = client.execute(httpGet);
-                    if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-                        InputStream resp = response.getEntity().getContent();
-                        BufferedReader reader = new BufferedReader(new InputStreamReader(resp));
-                        StringBuilder out = new StringBuilder();
-                        String line;
-                        while ((line = reader.readLine()) != null) {
-                            out.append(line);
-                        }
-                        content = out.toString();   //Prints the string content read from input stream
-                        reader.close();
-
-                        extractRecipes(content);
-                        querySuccessful = true;
-
-                    } else {
-                        Log.d(TAG, "HTTP Status Code was not 200 / OK");
+            try {
+                HttpResponse response = client.execute(httpGet);
+                if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+                    InputStream resp = response.getEntity().getContent();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(resp));
+                    StringBuilder out = new StringBuilder();
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        out.append(line);
                     }
-                } catch (Exception e) {
-                    Log.e(TAG, "Error loading " + getURL, e);
+                    content = out.toString();   //Prints the string content read from input stream
+                    reader.close();
+
+                    extractRecipes(content);
+                    querySuccessful = true;
+
+                } else {
+                    Log.d(TAG, "HTTP Status Code was not 200 / OK");
                 }
+            } catch (Exception e) {
+                Log.e(TAG, "Error loading " + getURL, e);
+            }
 
             return content;
         }
