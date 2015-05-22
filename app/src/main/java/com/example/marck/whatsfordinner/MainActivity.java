@@ -12,6 +12,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class MainActivity extends ActionBarActivity {
 
+    private final int MENU_SCREENSLIDE = 4;
     private final int MENU_FAVOURITES = 0;
     private final int MENU_BLACKLIST = 1;
     private final int MENU_SETTINGS = 2;
@@ -33,6 +34,7 @@ public class MainActivity extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         //getMenuInflater().inflate(R.menu.menu_main, menu);
 
+        menu.add(0, MENU_SCREENSLIDE, 0, "Screen Slide");
         menu.add(0, MENU_FAVOURITES, 0, "Favourites");
         menu.add(0, MENU_BLACKLIST, 0, "Blacklist");
         menu.add(0, MENU_SETTINGS, 0, "Settings");
@@ -55,6 +57,10 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);*/
 
         switch (item.getItemId()) {
+            case MENU_SCREENSLIDE:
+                Intent screenSlideIntent = new Intent(MainActivity.this, ScreenSlideActivity.class);
+                startActivity(screenSlideIntent);
+                return true;
             case MENU_FAVOURITES:
                 Intent favouritesIntent = new Intent(MainActivity.this, FavouritesActivity.class);
                 startActivity(favouritesIntent);
