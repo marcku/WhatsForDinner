@@ -25,7 +25,7 @@ public class MainActivity extends ActionBarActivity {
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
         ImageLoader.getInstance().init(config);
 
-        new RecipeHandler(this).loadRecipes("pizza");
+        new RecipeHandler(this).loadRecipes();
     }
 
     @Override
