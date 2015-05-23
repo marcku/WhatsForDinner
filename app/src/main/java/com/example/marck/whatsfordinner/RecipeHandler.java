@@ -2,15 +2,17 @@ package com.example.marck.whatsfordinner;
 
 import android.app.Activity;
 import android.os.AsyncTask;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 
 import com.example.marck.whatsfordinner.model.Recipe;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -39,22 +41,28 @@ public class RecipeHandler {
     private ArrayList<Recipe> recipeList = new ArrayList<>();
 
     private static final String LOGTAG = "RecipeActivity";
-    private static final int NUM_RECIEPS = 30;
     private int completed = 0;
 
+    private static final int NUM_RECIEPS = 20;
+
     private ProgressBar progressBar;
+
+    /**
+     * The pager widget, which handles animation and allows swiping horizontally to access previous
+     * and next wizard steps.
+     */
+    private ViewPager mPager;
+
+    /**
+     * The pager adapter, which provides the pages to the view pager widget.
+     */
+    private PagerAdapter mPagerAdapter;
+
 
     public RecipeHandler(Activity mHostActivity) {
         this.mHostActivity = mHostActivity;
 
         progressBar = (ProgressBar) mHostActivity.findViewById(R.id.progressBar);
-
-        this.options = new DisplayImageOptions.Builder()
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .considerExifParams(true)
-                .displayer(new RoundedBitmapDisplayer(20))
-                .build();
 
     }
 
@@ -72,21 +80,18 @@ public class RecipeHandler {
         completed++;
 
         if (completed == NUM_RECIEPS) {
-            renderListView();
+            renderPagerView();
         }
     }
 
-    private void renderListView() {
-
+    private void renderPagerView() {
         progressBar.setVisibility(View.INVISIBLE);
 
-        ListView listView = (ListView) mHostActivity
-                .findViewById(R.id.listRecipeViewId);
-        listView.setAdapter(new RecipeItemAdapter(mHostActivity,
-                R.layout.listitem,
-                recipeList,
-                options
-        ));
+        mPager = (ViewPager) mHostActivity.findViewById(R.id.pager);
+
+        ActionBarActivity fActivity = (ActionBarActivity) mHostActivity;
+        mPagerAdapter = new ScreenSlidePagerAdapter(fActivity.getSupportFragmentManager());
+        mPager.setAdapter(mPagerAdapter);
     }
 
     private class GetTags extends AsyncTask<String, Void, String> {
@@ -217,7 +222,7 @@ public class RecipeHandler {
             String text = currentElement.text();
             String title = currentElement.getElementsByTag("h2").text();
             String imgSrc = currentElement.getElementsByTag("img").attr("src");
-            imgSrc = imgSrc.replace("tiniefix", "bigfix");
+            imgSrc = imgSrc.replace("tiniefix", "960x720");
             String recipeLink = currentElement.getElementsByTag("a").attr("href");
             recipe = new Recipe(title, imgSrc, recipeLink);
             recipeList.add(recipe);
@@ -238,5 +243,21 @@ public class RecipeHandler {
         int randomNum = rand.nextInt((max - min) + 1) + min;
 
         return randomNum;
+    }
+
+    public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+        public ScreenSlidePagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public android.support.v4.app.Fragment getItem(int position) {
+            return ScreenSlidePageFragment.create(recipeList.get(position), position);
+        }
+
+        @Override
+        public int getCount() {
+            return NUM_RECIEPS;
+        }
     }
 }

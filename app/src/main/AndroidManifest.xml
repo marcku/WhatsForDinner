@@ -32,10 +32,6 @@
             android:name=".DetailsActivity"
             android:label="@string/title_activity_details" >
         </activity>
-        <activity
-            android:name=".ScreenSlideActivity"
-            android:label="@string/title_activity_screen_slide" >
-        </activity>
     </application>
 
 </manifest>
