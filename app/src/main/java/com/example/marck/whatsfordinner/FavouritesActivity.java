@@ -8,24 +8,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
-import com.example.marck.whatsfordinner.model.Recipe;
+import com.example.marck.whatsfordinner.dataaccess.FavouritelistRepository;
+import com.example.marck.whatsfordinner.model.FavouritelistItem;
 
 public class FavouritesActivity extends ListActivity {
 
     FavouritesAdapter adapter;
+    FavouritelistRepository repository = new FavouritelistRepository();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        final int numRows = 64;
-        super.onCreate(savedInstanceState);
-        Recipe[] rowData = new Recipe[numRows];
 
-        // initialize the array with some data (for demo and debugging purposes
-        // only)
-        for (int i = 0; i < numRows; i++) {
-            rowData[i] = new Recipe("Item " + String.valueOf(i + 1), "lel", "lel");
-        }
+        super.onCreate(savedInstanceState);
+        FavouritelistItem[] rowData = repository.getFavouriteListEntries(getBaseContext());
 
         // construct and register the adapter
         adapter = new FavouritesAdapter(this, rowData);

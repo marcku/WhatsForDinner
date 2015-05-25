@@ -87,6 +87,14 @@ public class DBManager extends SQLiteOpenHelper {
 
         db.insertOrThrow(TABLE_Blacklist, null, values);
 
+        db = this.getWritableDatabase();
+        values = new ContentValues();
+        values.put(COL_FAV_Title , "Mandarinen - Torte");
+        values.put(COL_FAV_ImageSrc , "http://static.chefkoch-cdn.de/ck.de/rezepte/71/71914/207365-tiniefix-mandarinen-torte.jpg");
+        values.put(COL_FAV_Link , "http://mobile.chefkoch.de/rezepte/m719141174576214/Mandarinen-Torte.html");
+
+        db.insertOrThrow(TABLE_Favourites, null, values);
+
     }
 
     public void insertBlackListItem(String title, String imageSrc, String link, Long expiration){
@@ -129,11 +137,11 @@ public class DBManager extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor c = db.rawQuery("SELECT * FROM " + TABLE_Favourites, null);
 
-        FavouritelistItem[] favArray = null;
+        FavouritelistItem[] favArray = new FavouritelistItem[100];
 
-        int Column1 = c.getColumnIndex("title");
-        int Column2 = c.getColumnIndex("imageSrc");
-        int Column3 = c.getColumnIndex("link");
+        int Column1 = c.getColumnIndex(COL_FAV_Title);
+        int Column2 = c.getColumnIndex(COL_FAV_ImageSrc);
+        int Column3 = c.getColumnIndex(COL_FAV_Link);
 
         // Check if our result was valid.
         c.moveToFirst();
@@ -189,7 +197,7 @@ public class DBManager extends SQLiteOpenHelper {
 
         TaglistItem[] tagListArray = null;
 
-        int Column1 = c.getColumnIndex("link");
+        int Column1 = c.getColumnIndex(COL_TAG_Name);
 
         // Check if our result was valid.
         c.moveToFirst();

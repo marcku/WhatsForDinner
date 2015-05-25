@@ -19,7 +19,7 @@ public class FavouritelistItem {
         return title;
     }
 
-    public String getimageSrc(){
+    public String getImageSrc(){
         return imageSrc;
     }
 

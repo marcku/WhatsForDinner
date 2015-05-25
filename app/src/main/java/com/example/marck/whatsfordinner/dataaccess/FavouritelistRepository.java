@@ -9,6 +9,7 @@ public class FavouritelistRepository {
     public FavouritelistItem[] getFavouriteListEntries(Context context) {
 
         DBManager dbManager = new DBManager(context);
+
         FavouritelistItem[] favouriteListArray;
         favouriteListArray = dbManager.getFavouritesList();
 

@@ -1,27 +1,29 @@
 package com.example.marck.whatsfordinner;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.marck.whatsfordinner.model.Recipe;
+import com.example.marck.whatsfordinner.model.FavouritelistItem;
 
 import java.util.ArrayList;
 
-public class FavouritesAdapter extends ArrayAdapter<Recipe> {
+public class FavouritesAdapter extends ArrayAdapter<FavouritelistItem> {
     private ArrayList<Boolean> status = new ArrayList<>();
     private final Context context;
-    private final Recipe[] rowData;
+    private final FavouritelistItem[] rowData;
 
     /*
      * Adapter to fetch the strings and images for each row Make sure you store
      * any per-item state in this adapter, not in the Views which may be
      * recycled upon scrolling
      */
-    public FavouritesAdapter(Context context, Recipe[] rowData) {
+    public FavouritesAdapter(Context context, FavouritelistItem[] rowData) {
         super(context, R.layout.listitem, rowData);
         this.context = context;
         this.rowData = rowData;
@@ -63,10 +65,22 @@ public class FavouritesAdapter extends ArrayAdapter<Recipe> {
         if (rowData[position] != null) {
             // obtain references to the views inside the rowView that we'd like
             // to fill with data
+            ImageView imageView = (ImageView) rowView.findViewById(R.id.recipeImage);
+
+            if (imageView != null) {
+                imageView.setImageURI(Uri.parse(rowData[position].getImageSrc()));
+            }
+
             TextView textView = (TextView) rowView.findViewById(R.id.title);
 
             if (textView != null) {
                 textView.setText(rowData[position].getTitle());
+            }
+
+            TextView shorttextView = (TextView) rowView.findViewById(R.id.shorttext);
+
+            if (shorttextView != null) {
+                shorttextView.setText(rowData[position].getLink());
             }
 
         }
