@@ -7,8 +7,6 @@ import java.util.Date;
 import com.example.marck.whatsfordinner.model.BlacklistItem;
 
 public class BlackListRepository {
-    public int Id;
-    public Date ExpirationDate;
 
     public BlacklistItem[] getBlacklistEntries(Context context) {
 

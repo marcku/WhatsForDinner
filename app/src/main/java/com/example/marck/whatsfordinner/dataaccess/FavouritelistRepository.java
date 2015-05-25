@@ -5,9 +5,6 @@ import android.content.Context;
 import com.example.marck.whatsfordinner.model.FavouritelistItem;
 
 public class FavouritelistRepository {
-    public int Id;
-    public String Link;
-
 
     public FavouritelistItem[] getFavouriteListEntries(Context context) {
 

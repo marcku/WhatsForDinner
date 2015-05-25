@@ -21,11 +21,11 @@ public class BlackListActivity extends ListActivity {
 /*        super.onCreate(savedInstanceState);
         setContentView(R.layout.blacklistitem);*/
 
-        BlacklistItem item = new BlacklistItem("title", "imageSrc", "link", 12345L);
-        repository.saveBlackListEntry(item);
+/*        BlacklistItem item = new BlacklistItem("title", "imageSrc", "link", 12345L);
+        repository.saveBlackListEntry(item);*/
 
         super.onCreate(savedInstanceState);
-        BlacklistItem[] rowData = repository.getBlacklistEntries();
+        BlacklistItem[] rowData = repository.getBlacklistEntries(getBaseContext());
 
         // construct and register the adapter
         adapter = new BlackListAdapter(this, rowData);
