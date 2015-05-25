@@ -5,7 +5,10 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebView;
+import android.widget.Button;
+import android.widget.Toast;
 
 
 public class DetailsActivity extends ActionBarActivity {
@@ -28,6 +31,14 @@ public class DetailsActivity extends ActionBarActivity {
 
         WebView webView = (WebView) findViewById(R.id.webView);
         webView.loadUrl(DOMAIN + link);
+
+        Button hateItButton = (Button) findViewById(R.id.hateIt);
+        View.OnClickListener hateItListener = new ClickListener();
+        hateItButton.setOnClickListener(hateItListener);
+
+        Button loveItButton = (Button) findViewById(R.id.loveIt);
+        View.OnClickListener loveItListener = new ClickListener();
+        loveItButton.setOnClickListener(loveItListener);
     }
 
 
@@ -51,5 +62,24 @@ public class DetailsActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private class ClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+
+            if(v.getId() == R.id.hateIt) {
+
+                Toast.makeText(DetailsActivity.this, "In Blacklist verschoben (gelogen)", Toast.LENGTH_LONG).show();
+
+            }else if(v.getId() == R.id.loveIt) {
+
+                Toast.makeText(DetailsActivity.this, "In Favourites verschoben (gelogen)", Toast.LENGTH_LONG).show();
+
+            }
+
+        }
+
     }
 }
