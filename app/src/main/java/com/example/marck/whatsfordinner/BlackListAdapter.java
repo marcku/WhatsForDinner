@@ -1,10 +1,12 @@
 package com.example.marck.whatsfordinner;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.marck.whatsfordinner.model.BlacklistItem;
@@ -25,9 +27,6 @@ public class BlackListAdapter extends ArrayAdapter<BlacklistItem> {
         super(context, R.layout.listitem, rowData);
         this.context = context;
         this.rowData = rowData;
-        for (int i = 0; i < rowData.length; i++) {
-            status.add(false);
-        }
     }
 
     /*
@@ -63,10 +62,22 @@ public class BlackListAdapter extends ArrayAdapter<BlacklistItem> {
         if (rowData[position] != null) {
             // obtain references to the views inside the rowView that we'd like
             // to fill with data
+            ImageView imageView = (ImageView) rowView.findViewById(R.id.recipeImage);
+
+            if (imageView != null) {
+                imageView.setImageURI(Uri.parse(rowData[position].getImageSrc()));
+            }
+
             TextView textView = (TextView) rowView.findViewById(R.id.title);
 
             if (textView != null) {
                 textView.setText(rowData[position].getTitle());
+            }
+
+            TextView shorttextView = (TextView) rowView.findViewById(R.id.shorttext);
+
+            if (shorttextView != null) {
+                shorttextView.setText(rowData[position].getLink());
             }
 
         }

@@ -10,6 +10,8 @@ public interface DBDefinition extends BaseColumns {
 
     // Columns of the Favourites table
     public static final String COL_FAV_Id = "Id";
+    public static final String COL_FAV_Title = "Title";
+    public static final String COL_FAV_ImageSrc = "ImageSrc";
     public static final String COL_FAV_Link = "Link";
 
     //Columns of the Blacklist table

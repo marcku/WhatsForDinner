@@ -14,6 +14,8 @@ import static com.example.marck.whatsfordinner.dataaccess.DBDefinition.TABLE_Fav
 import static com.example.marck.whatsfordinner.dataaccess.DBDefinition.TABLE_Blacklist;
 import static com.example.marck.whatsfordinner.dataaccess.DBDefinition.TABLE_TagCloud;
 import static com.example.marck.whatsfordinner.dataaccess.DBDefinition.COL_FAV_Id;
+import static com.example.marck.whatsfordinner.dataaccess.DBDefinition.COL_FAV_Title;
+import static com.example.marck.whatsfordinner.dataaccess.DBDefinition.COL_FAV_ImageSrc;
 import static com.example.marck.whatsfordinner.dataaccess.DBDefinition.COL_FAV_Link;
 import static com.example.marck.whatsfordinner.dataaccess.DBDefinition.COL_BLKLIST_Id;
 import static com.example.marck.whatsfordinner.dataaccess.DBDefinition.COL_BLKLIST_Title;
@@ -37,7 +39,9 @@ public class DBManager extends SQLiteOpenHelper {
 
         db.execSQL("CREATE TABLE " + TABLE_Favourites + " ("
                 + COL_FAV_Id + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + COL_FAV_Link + " TEXT NOT NULL);");
+                + COL_FAV_Title + " Text NOT NULL,"
+                + COL_FAV_ImageSrc + " Text NOT NULL,"
+                + COL_FAV_Link + " Text NOT NULL);");
 
         db.execSQL("CREATE TABLE " + TABLE_Blacklist + " ("
                 + COL_BLKLIST_Id + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -83,13 +87,40 @@ public class DBManager extends SQLiteOpenHelper {
 
         db.insertOrThrow(TABLE_Blacklist, null, values);
 
-        values = new ContentValues();
-        values.put(COL_BLKLIST_Title , "Etwas anderes");
-        values.put(COL_BLKLIST_ImageSrc , "http://static.chefkoch-cdn.de/ck.de/rezepte/178/178133/723434-tiniefix-mikrowellenkuchen.jpg");
-        values.put(COL_BLKLIST_Link , "http://mobile.chefkoch.de/rezepte/m1781331287996596/Etwas_anderes.html");
-        values.put(COL_BLKLIST_Expiration , 1000000000L);
+    }
+
+    public void insertBlackListItem(String title, String imageSrc, String link, Long expiration){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_BLKLIST_Title , title);
+        values.put(COL_BLKLIST_ImageSrc , imageSrc);
+        values.put(COL_BLKLIST_Link , link);
+        values.put(COL_BLKLIST_Expiration , expiration);
 
         db.insertOrThrow(TABLE_Blacklist, null, values);
+
+    }
+
+    public void insertFavouriteListItem(String title, String imageSrc, String link){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_FAV_Title , title);
+        values.put(COL_FAV_ImageSrc , imageSrc);
+        values.put(COL_FAV_Link , link);
+
+        db.insertOrThrow(TABLE_Favourites, null, values);
+
+    }
+
+    public void insertTagListItem(String name){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_TAG_Name, name);
+
+        db.insertOrThrow(TABLE_TagCloud, null, values);
 
     }
 
