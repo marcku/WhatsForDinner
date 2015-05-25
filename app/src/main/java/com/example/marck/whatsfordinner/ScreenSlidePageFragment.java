@@ -56,7 +56,7 @@ public class ScreenSlidePageFragment extends Fragment {
     public static final String ARG_RECIPE_TITLE = "recipeTitle";
     public static final String ARG_RECIPE_IMAGE = "recipeImageSrc";
     public static final String ARG_RECIPE_LINK = "recipeLink";
-    public static final String DOMAIN = "http://mobile.chefkoch.de";
+
     /**
      * The fragment's page number, which is set to the argument value for {@link #ARG_PAGE}.
      */
@@ -171,7 +171,9 @@ public class ScreenSlidePageFragment extends Fragment {
             Log.d("ClickListener", "clicked: " + recipeTitle);
 
             Intent detailsIntent = new Intent(getActivity(), DetailsActivity.class);
-            detailsIntent.setData(Uri.parse(DOMAIN + recipeLink));
+            detailsIntent.putExtra("link",recipeLink);
+            detailsIntent.putExtra("imageSrc", recipeImage);
+            detailsIntent.putExtra("title", recipeTitle);
             startActivity(detailsIntent);
         }
     }

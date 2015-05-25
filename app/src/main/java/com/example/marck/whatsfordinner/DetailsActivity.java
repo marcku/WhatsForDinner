@@ -1,5 +1,6 @@
 package com.example.marck.whatsfordinner;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,13 +10,24 @@ import android.webkit.WebView;
 
 public class DetailsActivity extends ActionBarActivity {
 
+    private String title;
+    private String imageSrc;
+    private String link;
+
+    public static final String DOMAIN = "http://mobile.chefkoch.de";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
+        Intent myIntent = getIntent();
+        title = myIntent.getStringExtra("title");
+        imageSrc = myIntent.getStringExtra("imageSrc");
+        link = myIntent.getStringExtra("link");
+
         WebView webView = (WebView) findViewById(R.id.webView);
-        webView.loadUrl(this.getIntent().getDataString());
+        webView.loadUrl(DOMAIN + link);
     }
 
 
