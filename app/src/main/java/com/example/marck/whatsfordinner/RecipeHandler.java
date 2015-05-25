@@ -43,7 +43,7 @@ public class RecipeHandler {
     private static final String LOGTAG = "RecipeActivity";
     private int completed = 0;
 
-    private static final int NUM_RECIEPS = 20;
+    private static final int NUM_RECIEPS = 5;
 
     private ProgressBar progressBar;
 

@@ -2,6 +2,7 @@ package com.example.marck.whatsfordinner;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,11 +19,6 @@ public class BlackListActivity extends ListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-/*        super.onCreate(savedInstanceState);
-        setContentView(R.layout.blacklistitem);*/
-
-/*        BlacklistItem item = new BlacklistItem("title", "imageSrc", "link", 12345L);
-        repository.saveBlackListEntry(item);*/
 
         super.onCreate(savedInstanceState);
         BlacklistItem[] rowData = repository.getBlacklistEntries(getBaseContext());
@@ -61,6 +57,7 @@ public class BlackListActivity extends ListActivity {
         super.onListItemClick(l, v, position, id);
 
         Intent detailsIntent = new Intent(BlackListActivity.this, DetailsActivity.class);
+        detailsIntent.setData(Uri.parse("http://mobile.chefkoch.de/rezepte/m1781331287996596/Mikrowellenkuchen.html"));
         startActivity(detailsIntent);
 
     }

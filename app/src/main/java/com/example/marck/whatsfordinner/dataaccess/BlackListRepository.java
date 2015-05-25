@@ -11,6 +11,9 @@ public class BlackListRepository {
     public BlacklistItem[] getBlacklistEntries(Context context) {
 
         DBManager dbManager = new DBManager(context);
+
+        dbManager.createTestEntries();
+
         BlacklistItem[] blackListArray;
         blackListArray = dbManager.getBlackList();
 

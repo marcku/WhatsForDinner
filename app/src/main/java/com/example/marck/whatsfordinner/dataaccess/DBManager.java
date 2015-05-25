@@ -1,5 +1,6 @@
 package com.example.marck.whatsfordinner.dataaccess;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -15,7 +16,10 @@ import static com.example.marck.whatsfordinner.dataaccess.DBDefinition.TABLE_Tag
 import static com.example.marck.whatsfordinner.dataaccess.DBDefinition.COL_FAV_Id;
 import static com.example.marck.whatsfordinner.dataaccess.DBDefinition.COL_FAV_Link;
 import static com.example.marck.whatsfordinner.dataaccess.DBDefinition.COL_BLKLIST_Id;
-import static com.example.marck.whatsfordinner.dataaccess.DBDefinition.COL_BLKLIST_ExpDate;
+import static com.example.marck.whatsfordinner.dataaccess.DBDefinition.COL_BLKLIST_Title;
+import static com.example.marck.whatsfordinner.dataaccess.DBDefinition.COL_BLKLIST_ImageSrc;
+import static com.example.marck.whatsfordinner.dataaccess.DBDefinition.COL_BLKLIST_Link;
+import static com.example.marck.whatsfordinner.dataaccess.DBDefinition.COL_BLKLIST_Expiration;
 import static com.example.marck.whatsfordinner.dataaccess.DBDefinition.COL_TAG_Id;
 import static com.example.marck.whatsfordinner.dataaccess.DBDefinition.COL_TAG_Name;
 
@@ -37,7 +41,10 @@ public class DBManager extends SQLiteOpenHelper {
 
         db.execSQL("CREATE TABLE " + TABLE_Blacklist + " ("
                 + COL_BLKLIST_Id + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + COL_BLKLIST_ExpDate + " DATE NOT NULL);");
+                + COL_BLKLIST_Title + " Text NOT NULL,"
+                + COL_BLKLIST_ImageSrc + " Text NOT NULL,"
+                + COL_BLKLIST_Link + " Text NOT NULL,"
+                + COL_BLKLIST_Expiration + " Long NOT NULL);");
 
         db.execSQL("CREATE TABLE " + TABLE_TagCloud + " ("
                 + COL_TAG_Id + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -65,9 +72,24 @@ public class DBManager extends SQLiteOpenHelper {
 
     }
 
-    public void testInsert(){
+    public void createTestEntries(){
 
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_BLKLIST_Title , "Mikrowellenkuchen");
+        values.put(COL_BLKLIST_ImageSrc , "http://static.chefkoch-cdn.de/ck.de/rezepte/178/178133/723434-tiniefix-mikrowellenkuchen.jpg");
+        values.put(COL_BLKLIST_Link , "http://mobile.chefkoch.de/rezepte/m1781331287996596/Mikrowellenkuchen.html");
+        values.put(COL_BLKLIST_Expiration , 1000000000L);
 
+        db.insertOrThrow(TABLE_Blacklist, null, values);
+
+        values = new ContentValues();
+        values.put(COL_BLKLIST_Title , "Etwas anderes");
+        values.put(COL_BLKLIST_ImageSrc , "http://static.chefkoch-cdn.de/ck.de/rezepte/178/178133/723434-tiniefix-mikrowellenkuchen.jpg");
+        values.put(COL_BLKLIST_Link , "http://mobile.chefkoch.de/rezepte/m1781331287996596/Etwas_anderes.html");
+        values.put(COL_BLKLIST_Expiration , 1000000000L);
+
+        db.insertOrThrow(TABLE_Blacklist, null, values);
 
     }
 
@@ -104,12 +126,12 @@ public class DBManager extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor c = db.rawQuery("SELECT * FROM " + TABLE_Blacklist, null);
 
-        BlacklistItem[] blackListArray = null;
+        BlacklistItem[] blackListArray = new BlacklistItem[100];
 
-        int Column1 = c.getColumnIndex("title");
-        int Column2 = c.getColumnIndex("imageSrc");
-        int Column3 = c.getColumnIndex("link");
-        int Column4 = c.getColumnIndex("expiration");
+        int Column1 = c.getColumnIndex(COL_BLKLIST_Title);
+        int Column2 = c.getColumnIndex(COL_BLKLIST_ImageSrc);
+        int Column3 = c.getColumnIndex(COL_BLKLIST_Link);
+        int Column4 = c.getColumnIndex(COL_BLKLIST_Expiration);
 
         // Check if our result was valid.
         c.moveToFirst();

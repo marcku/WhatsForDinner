@@ -14,7 +14,10 @@ public interface DBDefinition extends BaseColumns {
 
     //Columns of the Blacklist table
     public static final String COL_BLKLIST_Id = "Id";
-    public static final String COL_BLKLIST_ExpDate = "ExpirationDate";
+    public static final String COL_BLKLIST_Title = "Title";
+    public static final String COL_BLKLIST_ImageSrc = "ImageSrc";
+    public static final String COL_BLKLIST_Link = "Link";
+    public static final String COL_BLKLIST_Expiration = "Expiration";
 
     //Columns of the TagCloud table
     public static final String COL_TAG_Id = "Id";

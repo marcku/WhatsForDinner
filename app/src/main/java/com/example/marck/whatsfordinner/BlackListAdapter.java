@@ -66,7 +66,7 @@ public class BlackListAdapter extends ArrayAdapter<BlacklistItem> {
             TextView textView = (TextView) rowView.findViewById(R.id.title);
 
             if (textView != null) {
-                textView.setText(rowData[position].getLink());
+                textView.setText(rowData[position].getTitle());
             }
 
         }
