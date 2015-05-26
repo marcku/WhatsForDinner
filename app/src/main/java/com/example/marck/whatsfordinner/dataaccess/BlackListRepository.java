@@ -29,4 +29,11 @@ public class BlackListRepository {
 
     }
 
+    public boolean isBlackListItemInDb(Context context, String link){
+
+        DBManager dbManager = new DBManager(context);
+        return dbManager.isBlackListItemInDb(link);
+
+    }
+
 }

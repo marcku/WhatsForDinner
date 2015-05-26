@@ -214,4 +214,41 @@ public class DBManager extends SQLiteOpenHelper {
         return tagListArray;
     }
 
+    public boolean isFavouriteListItemInDb(String link) {
+
+        boolean itemInDb = false;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.rawQuery("SELECT " + COL_FAV_Link + " FROM " + TABLE_Favourites + " WHERE " + COL_FAV_Link + " = '" + link + "'", null);
+
+        // Check if we got results.
+        if(c.getCount() > 0){
+
+            itemInDb = true;
+
+        }
+        c.close();
+
+        return itemInDb;
+    }
+
+    public boolean isBlackListItemInDb(String link){
+
+        boolean itemInDb = false;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.rawQuery("SELECT " + COL_BLKLIST_Link + " FROM " + TABLE_Blacklist + " WHERE " + COL_BLKLIST_Link + " = '" + link + "'", null);
+
+        // Check if we got results.
+        if(c.getCount() > 0){
+
+            itemInDb = true;
+
+        }
+        c.close();
+
+        return itemInDb;
+
+    }
+
 }

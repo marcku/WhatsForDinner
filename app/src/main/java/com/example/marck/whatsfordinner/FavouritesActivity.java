@@ -19,14 +19,12 @@ public class FavouritesActivity extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
         super.onCreate(savedInstanceState);
         FavouritelistItem[] rowData = repository.getFavouriteListEntries(getBaseContext());
 
         // construct and register the adapter
         adapter = new FavouritesAdapter(this, rowData);
         setListAdapter(adapter);
-
 
     }
 

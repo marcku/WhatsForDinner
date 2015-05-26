@@ -24,4 +24,11 @@ public class FavouritelistRepository {
 
     }
 
+    public boolean isFavouriteListItemInDb(Context context, String link){
+
+        DBManager dbManager = new DBManager(context);
+        return dbManager.isFavouriteListItemInDb(link);
+
+    }
+
 }

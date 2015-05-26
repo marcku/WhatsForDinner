@@ -77,16 +77,32 @@ public class DetailsActivity extends ActionBarActivity {
             if(v.getId() == R.id.hateIt) {
 
                 BlackListRepository repository = new BlackListRepository();
-                repository.insertIntoBlacklist(getBaseContext(), title, imageSrc, link);
 
-                Toast.makeText(DetailsActivity.this, "Rezept in Blacklist verschoben", Toast.LENGTH_LONG).show();
+                if (repository.isBlackListItemInDb(getBaseContext(), link)){
+
+                    Toast.makeText(DetailsActivity.this, "Rezept ist bereits in der Blacklist", Toast.LENGTH_LONG).show();
+
+                } else {
+
+                    repository.insertIntoBlacklist(getBaseContext(), title, imageSrc, link);
+                    Toast.makeText(DetailsActivity.this, "Rezept in Blacklist verschoben", Toast.LENGTH_LONG).show();
+
+                }
 
             }else if(v.getId() == R.id.loveIt) {
 
                 FavouritelistRepository repository = new FavouritelistRepository();
-                repository.insertIntoFavouriteList(getBaseContext(), title, imageSrc, link);
 
-                Toast.makeText(DetailsActivity.this, "Rezept zu Favourites verschoben", Toast.LENGTH_LONG).show();
+                if (repository.isFavouriteListItemInDb(getBaseContext(), link)){
+
+                    Toast.makeText(DetailsActivity.this, "Rezept ist bereits in den Favourites", Toast.LENGTH_LONG).show();
+
+                } else {
+
+                    repository.insertIntoFavouriteList(getBaseContext(), title, imageSrc, link);
+                    Toast.makeText(DetailsActivity.this, "Rezept zu Favourites verschoben", Toast.LENGTH_LONG).show();
+
+                }
 
             }
 
