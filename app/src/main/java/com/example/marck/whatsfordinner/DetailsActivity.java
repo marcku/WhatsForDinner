@@ -10,6 +10,11 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.marck.whatsfordinner.dataaccess.BlackListRepository;
+import com.example.marck.whatsfordinner.dataaccess.DBManager;
+import com.example.marck.whatsfordinner.dataaccess.FavouritelistRepository;
+import com.example.marck.whatsfordinner.model.BlacklistItem;
+
 
 public class DetailsActivity extends ActionBarActivity {
 
@@ -71,11 +76,17 @@ public class DetailsActivity extends ActionBarActivity {
 
             if(v.getId() == R.id.hateIt) {
 
-                Toast.makeText(DetailsActivity.this, "In Blacklist verschoben (gelogen)", Toast.LENGTH_LONG).show();
+                BlackListRepository repository = new BlackListRepository();
+                repository.insertIntoBlacklist(getBaseContext(), title, imageSrc, link);
+
+                Toast.makeText(DetailsActivity.this, "Rezept in Blacklist verschoben", Toast.LENGTH_LONG).show();
 
             }else if(v.getId() == R.id.loveIt) {
 
-                Toast.makeText(DetailsActivity.this, "In Favourites verschoben (gelogen)", Toast.LENGTH_LONG).show();
+                FavouritelistRepository repository = new FavouritelistRepository();
+                repository.insertIntoFavouriteList(getBaseContext(), title, imageSrc, link);
+
+                Toast.makeText(DetailsActivity.this, "Rezept zu Favourites verschoben", Toast.LENGTH_LONG).show();
 
             }
 

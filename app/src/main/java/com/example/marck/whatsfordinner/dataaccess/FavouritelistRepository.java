@@ -16,4 +16,12 @@ public class FavouritelistRepository {
         return favouriteListArray;
 
     }
+
+    public void insertIntoFavouriteList(Context context, String title, String imageSrc, String link) {
+
+        DBManager dbManager = new DBManager(context);
+        dbManager.insertFavouriteListItem(title, imageSrc, link);
+
+    }
+
 }

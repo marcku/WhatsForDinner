@@ -22,4 +22,11 @@ public class BlackListRepository {
 
     }
 
+    public void insertIntoBlacklist(Context context, String title, String imageSrc, String link) {
+
+        DBManager dbManager = new DBManager(context);
+        dbManager.insertBlackListItem(title, imageSrc, link, 100000L);
+
+    }
+
 }
