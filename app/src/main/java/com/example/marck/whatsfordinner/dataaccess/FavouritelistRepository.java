@@ -24,6 +24,13 @@ public class FavouritelistRepository {
 
     }
 
+    public void insertIntoFavouriteListFromBlackList(Context context, String title, String imageSrc, String link) {
+
+        DBManager dbManager = new DBManager(context);
+        dbManager.insertIntoFavouriteListFromBlItem(title, imageSrc, link);
+
+    }
+
     public boolean isFavouriteListItemInDb(Context context, String link){
 
         DBManager dbManager = new DBManager(context);

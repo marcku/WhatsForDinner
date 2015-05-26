@@ -11,9 +11,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.marck.whatsfordinner.dataaccess.BlackListRepository;
-import com.example.marck.whatsfordinner.dataaccess.DBManager;
 import com.example.marck.whatsfordinner.dataaccess.FavouritelistRepository;
-import com.example.marck.whatsfordinner.model.BlacklistItem;
 
 
 public class DetailsActivity extends ActionBarActivity {
@@ -74,33 +72,42 @@ public class DetailsActivity extends ActionBarActivity {
         @Override
         public void onClick(View v) {
 
+            BlackListRepository blackListRep = new BlackListRepository();
+            FavouritelistRepository favouritesRep = new FavouritelistRepository();
+
             if(v.getId() == R.id.hateIt) {
 
-                BlackListRepository repository = new BlackListRepository();
-
-                if (repository.isBlackListItemInDb(getBaseContext(), link)){
+                if (blackListRep.isBlackListItemInDb(getBaseContext(), link)){
 
                     Toast.makeText(DetailsActivity.this, "Rezept ist bereits in der Blacklist", Toast.LENGTH_LONG).show();
 
+                } else if(favouritesRep.isFavouriteListItemInDb(getBaseContext(), link)) {
+
+                    blackListRep.insertIntoBlackListFromFavouriteList(getBaseContext(), title, imageSrc, link);
+                    Toast.makeText(DetailsActivity.this, "Rezept von Favourites in Blacklist verschoben", Toast.LENGTH_LONG).show();
+
                 } else {
 
-                    repository.insertIntoBlacklist(getBaseContext(), title, imageSrc, link);
+                    blackListRep.insertIntoBlacklist(getBaseContext(), title, imageSrc, link);
                     Toast.makeText(DetailsActivity.this, "Rezept in Blacklist verschoben", Toast.LENGTH_LONG).show();
 
                 }
 
             }else if(v.getId() == R.id.loveIt) {
 
-                FavouritelistRepository repository = new FavouritelistRepository();
-
-                if (repository.isFavouriteListItemInDb(getBaseContext(), link)){
+                if (favouritesRep.isFavouriteListItemInDb(getBaseContext(), link)){
 
                     Toast.makeText(DetailsActivity.this, "Rezept ist bereits in den Favourites", Toast.LENGTH_LONG).show();
 
+                } else if(blackListRep.isBlackListItemInDb(getBaseContext(), link)) {
+
+                    favouritesRep.insertIntoFavouriteListFromBlackList(getBaseContext(), title, imageSrc, link);
+                    Toast.makeText(DetailsActivity.this, "Rezept von Blacklist in Favourites verschoben", Toast.LENGTH_LONG).show();
+
                 } else {
 
-                    repository.insertIntoFavouriteList(getBaseContext(), title, imageSrc, link);
-                    Toast.makeText(DetailsActivity.this, "Rezept zu Favourites verschoben", Toast.LENGTH_LONG).show();
+                    favouritesRep.insertIntoFavouriteList(getBaseContext(), title, imageSrc, link);
+                    Toast.makeText(DetailsActivity.this, "Rezept in die Favourites verschoben", Toast.LENGTH_LONG).show();
 
                 }
 

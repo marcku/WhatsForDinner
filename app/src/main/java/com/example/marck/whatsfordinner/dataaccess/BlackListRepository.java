@@ -2,8 +2,6 @@ package com.example.marck.whatsfordinner.dataaccess;
 
 import android.content.Context;
 
-import java.util.Date;
-
 import com.example.marck.whatsfordinner.model.BlacklistItem;
 
 public class BlackListRepository {
@@ -26,6 +24,13 @@ public class BlackListRepository {
 
         DBManager dbManager = new DBManager(context);
         dbManager.insertBlackListItem(title, imageSrc, link, 100000L);
+
+    }
+
+    public void insertIntoBlackListFromFavouriteList(Context context, String title, String imageSrc, String link) {
+
+        DBManager dbManager = new DBManager(context);
+        dbManager.insertBlackListItemFromFavItem(title, imageSrc, link, 100000L);
 
     }
 

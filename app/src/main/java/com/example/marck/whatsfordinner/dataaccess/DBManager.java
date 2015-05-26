@@ -110,9 +110,40 @@ public class DBManager extends SQLiteOpenHelper {
 
     }
 
+    public void insertBlackListItemFromFavItem(String title, String imageSrc, String link, Long expiration){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_Favourites, COL_FAV_Link + " = '" + link + "'", null);
+
+        db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_BLKLIST_Title , title);
+        values.put(COL_BLKLIST_ImageSrc , imageSrc);
+        values.put(COL_BLKLIST_Link , link);
+        values.put(COL_BLKLIST_Expiration , expiration);
+
+        db.insertOrThrow(TABLE_Blacklist, null, values);
+
+    }
+
     public void insertFavouriteListItem(String title, String imageSrc, String link){
 
         SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_FAV_Title , title);
+        values.put(COL_FAV_ImageSrc , imageSrc);
+        values.put(COL_FAV_Link , link);
+
+        db.insertOrThrow(TABLE_Favourites, null, values);
+
+    }
+
+    public void insertIntoFavouriteListFromBlItem(String title, String imageSrc, String link){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_Blacklist, COL_BLKLIST_Link + " = '" + link + "'", null);
+
+        db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COL_FAV_Title , title);
         values.put(COL_FAV_ImageSrc , imageSrc);
