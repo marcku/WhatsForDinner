@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.marck.whatsfordinner.dataaccess.BlackListRepository;
 import com.example.marck.whatsfordinner.model.BlacklistItem;
@@ -57,7 +58,12 @@ public class BlackListActivity extends ListActivity {
         super.onListItemClick(l, v, position, id);
 
         Intent detailsIntent = new Intent(BlackListActivity.this, DetailsActivity.class);
-        detailsIntent.setData(Uri.parse("http://mobile.chefkoch.de/rezepte/m1781331287996596/Mikrowellenkuchen.html"));
+
+        BlacklistItem blItem = (BlacklistItem)this.getListAdapter().getItem(position);
+        detailsIntent.putExtra("title", blItem.getTitle());
+        detailsIntent.putExtra("link", blItem.getLink());
+        detailsIntent.putExtra("imageSrc", blItem.getImageSrc());
+
         startActivity(detailsIntent);
 
     }

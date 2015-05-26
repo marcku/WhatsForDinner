@@ -58,6 +58,12 @@ public class FavouritesActivity extends ListActivity {
         super.onListItemClick(l, v, position, id);
 
         Intent detailsIntent = new Intent(FavouritesActivity.this, DetailsActivity.class);
+
+        FavouritelistItem favItem = (FavouritelistItem)this.getListAdapter().getItem(position);
+        detailsIntent.putExtra("title", favItem.getTitle());
+        detailsIntent.putExtra("link", favItem.getLink());
+        detailsIntent.putExtra("imageSrc", favItem.getImageSrc());
+
         startActivity(detailsIntent);
 
     }
