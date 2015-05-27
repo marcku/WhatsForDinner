@@ -43,7 +43,9 @@ public class RecipeHandler {
     private static final String LOGTAG = "RecipeActivity";
     private int completed = 0;
 
-    private static final int NUM_RECIEPS = 10;
+    private static final int MAX_NUM_RECIEPS = 10;
+
+    private int numRecieps;
 
     private ProgressBar progressBar;
 
@@ -67,11 +69,12 @@ public class RecipeHandler {
     }
 
     public void loadRecipes() {
+        numRecieps = MAX_NUM_RECIEPS;
         new GetTags().execute();
     }
 
     private void loadRecipeItems() {
-        for (int i = 0; i < NUM_RECIEPS; i++) {
+        for (int i = 0; i < MAX_NUM_RECIEPS; i++) {
             new DownloadRecipe().execute();
         }
     }
@@ -79,7 +82,7 @@ public class RecipeHandler {
     private void completedLoading() {
         completed++;
 
-        if (completed == NUM_RECIEPS) {
+        if (completed == numRecieps) {
             renderPagerView();
         }
     }
@@ -195,6 +198,7 @@ public class RecipeHandler {
                     Log.d(TAG, "HTTP Status Code was not 200 / OK");
                 }
             } catch (Exception e) {
+                --numRecieps;
                 Log.e(TAG, "Error loading " + getURL, e);
             }
 
@@ -257,7 +261,7 @@ public class RecipeHandler {
 
         @Override
         public int getCount() {
-            return NUM_RECIEPS;
+            return numRecieps;
         }
     }
 }
