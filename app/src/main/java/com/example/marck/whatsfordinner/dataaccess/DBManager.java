@@ -163,15 +163,14 @@ public class DBManager extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor c = db.rawQuery("SELECT * FROM " + TABLE_Favourites, null);
 
-        FavouritelistItem[] favArray = new FavouritelistItem[100];
+        FavouritelistItem[] favArray = new FavouritelistItem[c.getCount()];
 
         int Column1 = c.getColumnIndex(COL_FAV_Title);
         int Column2 = c.getColumnIndex(COL_FAV_ImageSrc);
         int Column3 = c.getColumnIndex(COL_FAV_Link);
 
         // Check if our result was valid.
-        c.moveToFirst();
-        if (c != null) {
+        if (c.getCount() > 0) {
             // Loop through all Results
 
             for (int i = 0; c.moveToNext(); i++){
@@ -191,7 +190,7 @@ public class DBManager extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor c = db.rawQuery("SELECT * FROM " + TABLE_Blacklist, null);
 
-        BlacklistItem[] blackListArray = new BlacklistItem[100];
+        BlacklistItem[] blackListArray = new BlacklistItem[c.getCount()];
 
         int Column1 = c.getColumnIndex(COL_BLKLIST_Title);
         int Column2 = c.getColumnIndex(COL_BLKLIST_ImageSrc);
@@ -199,8 +198,7 @@ public class DBManager extends SQLiteOpenHelper {
         int Column4 = c.getColumnIndex(COL_BLKLIST_Expiration);
 
         // Check if our result was valid.
-        c.moveToFirst();
-        if (c != null) {
+        if (c.getCount() > 0) {
 
             // Loop through all Results
             for (int i = 0; c.moveToNext(); i++){
@@ -226,8 +224,7 @@ public class DBManager extends SQLiteOpenHelper {
         int Column1 = c.getColumnIndex(COL_TAG_Name);
 
         // Check if our result was valid.
-        c.moveToFirst();
-        if (c != null) {
+        if (c.getCount() > 0) {
 
             // Loop through all Results
             for (int i = 0; c.moveToNext(); i++){
