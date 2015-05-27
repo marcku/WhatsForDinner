@@ -51,38 +51,39 @@ public class DetailsActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
 
-        menu.add(0, MENU_FAVOURITES, 0, "Favourites");
-        menu.add(0, MENU_BLACKLIST, 0, "Blacklist");
-        menu.add(0, MENU_SETTINGS, 0, "Settings");
-        menu.add(0, MENU_QUIT, 0, "Quit");
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
 
-        switch (item.getItemId()) {
-            case MENU_FAVOURITES:
-                Intent favouritesIntent = new Intent(DetailsActivity.this, FavouritesActivity.class);
-                startActivity(favouritesIntent);
-                return true;
-            case MENU_BLACKLIST:
-                Intent blackListIntent = new Intent(DetailsActivity.this, BlackListActivity.class);
-                startActivity(blackListIntent);
-                return true;
-            case MENU_SETTINGS:
-                Toast.makeText(DetailsActivity.this, "Les settings", Toast.LENGTH_LONG).show();
-                return true;
-            case MENU_QUIT:
-                quit();
-                return true;
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_favourites) {
+            Intent favouritesIntent = new Intent(DetailsActivity.this, FavouritesActivity.class);
+            startActivity(favouritesIntent);
+            return true;
+        } else if (id == R.id.action_blacklist) {
+            Intent blackListIntent = new Intent(DetailsActivity.this, BlackListActivity.class);
+            startActivity(blackListIntent);
+            return true;
+        } else if (id == R.id.action_settings) {
+            Toast.makeText(DetailsActivity.this, "Les settings", Toast.LENGTH_LONG).show();
+            return true;
+        } else if (id == R.id.action_quit) {
+            quit();
         }
-        return false;
+
+        return super.onOptionsItemSelected(item);
+
     }
 
     public void quit(){

@@ -32,24 +32,43 @@ public class BlackListActivity extends ListActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_black_list, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_favourites) {
+            Intent favouritesIntent = new Intent(BlackListActivity.this, FavouritesActivity.class);
+            startActivity(favouritesIntent);
             return true;
+        } else if (id == R.id.action_blacklist) {
+            Intent blackListIntent = new Intent(BlackListActivity.this, BlackListActivity.class);
+            startActivity(blackListIntent);
+            return true;
+        } else if (id == R.id.action_settings) {
+            Toast.makeText(BlackListActivity.this, "Les settings", Toast.LENGTH_LONG).show();
+            return true;
+        } else if (id == R.id.action_quit) {
+            quit();
         }
 
         return super.onOptionsItemSelected(item);
+
+    }
+
+    public void quit(){
+        this.finish();
     }
 
     @Override
