@@ -59,11 +59,6 @@ public class DBManager extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
 
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_Favourites);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_Blacklist);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TagCloud);
-        onCreate(db);
-
     }
 
     public void deleteDatabase(){
