@@ -1,7 +1,6 @@
 package com.example.marck.whatsfordinner;
 
 import android.content.Context;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.marck.whatsfordinner.model.BlacklistItem;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 
@@ -65,7 +66,7 @@ public class BlackListAdapter extends ArrayAdapter<BlacklistItem> {
             ImageView imageView = (ImageView) rowView.findViewById(R.id.recipeImage);
 
             if (imageView != null) {
-                imageView.setImageURI(Uri.parse(rowData[position].getImageSrc()));
+                ImageLoader.getInstance().displayImage(rowData[position].getImageSrc(), imageView, DisplayImageOptions.createSimple());
             }
 
             TextView textView = (TextView) rowView.findViewById(R.id.title);
