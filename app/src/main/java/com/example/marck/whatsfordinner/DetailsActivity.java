@@ -16,6 +16,11 @@ import com.example.marck.whatsfordinner.dataaccess.FavouritelistRepository;
 
 public class DetailsActivity extends ActionBarActivity {
 
+    private final int MENU_FAVOURITES = 0;
+    private final int MENU_BLACKLIST = 1;
+    private final int MENU_SETTINGS = 2;
+    private final int MENU_QUIT = 3;
+
     private String title;
     private String imageSrc;
     private String link;
@@ -44,11 +49,14 @@ public class DetailsActivity extends ActionBarActivity {
         loveItButton.setOnClickListener(loveItListener);
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_details, menu);
+
+        menu.add(0, MENU_FAVOURITES, 0, "Favourites");
+        menu.add(0, MENU_BLACKLIST, 0, "Blacklist");
+        menu.add(0, MENU_SETTINGS, 0, "Settings");
+        menu.add(0, MENU_QUIT, 0, "Quit");
         return true;
     }
 
@@ -57,14 +65,28 @@ public class DetailsActivity extends ActionBarActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case MENU_FAVOURITES:
+                Intent favouritesIntent = new Intent(DetailsActivity.this, FavouritesActivity.class);
+                startActivity(favouritesIntent);
+                return true;
+            case MENU_BLACKLIST:
+                Intent blackListIntent = new Intent(DetailsActivity.this, BlackListActivity.class);
+                startActivity(blackListIntent);
+                return true;
+            case MENU_SETTINGS:
+                Toast.makeText(DetailsActivity.this, "Les settings", Toast.LENGTH_LONG).show();
+                return true;
+            case MENU_QUIT:
+                quit();
+                return true;
         }
+        return false;
+    }
 
-        return super.onOptionsItemSelected(item);
+    public void quit(){
+        this.finish();
     }
 
     private class ClickListener implements View.OnClickListener {
